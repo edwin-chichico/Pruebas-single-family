@@ -1,0 +1,48 @@
+<?php
+// Crear producto
+function crearProducto($nombre, $descripcion, $precio, $stock, $categoria) {
+    global $conn;
+    $sql = "INSERT INTO productos (nombre, descripcion, precio, stock, categoria) VALUES ('$nombre', '$descripcion', $precio, $stock, '$categoria')";
+    if ($conn->query($sql) === TRUE) {
+        return true;
+    } else {
+        return false;
+    }
+}
+
+// Leer productos
+function obtenerProductos() {
+    global $conn;
+    $sql = "SELECT * FROM productos";
+    $result = $conn->query($sql);
+    $productos = array();
+    if ($result->num_rows > 0) {
+        while($row = $result->fetch_assoc()) {
+            $productos[] = $row;
+        }
+    }
+    return $productos;
+}
+
+// Actualizar producto
+function actualizarProducto($id, $nombre, $descripcion, $precio, $stock, $categoria) {
+    global $conn;
+    $sql = "UPDATE productos SET nombre='$nombre', descripcion='$descripcion', precio=$precio, stock=$stock, categoria='$categoria' WHERE id=$id";
+    if ($conn->query($sql) === TRUE) {
+        return true;
+    } else {
+        return false;
+    }
+}
+
+// Eliminar producto
+function eliminarProducto($id) {
+    global $conn;
+    $sql = "DELETE FROM productos WHERE id=$id";
+    if ($conn->query($sql) === TRUE) {
+        return true;
+    } else {
+        return false;
+    }
+}
+?>
